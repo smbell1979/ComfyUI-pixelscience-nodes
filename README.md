@@ -65,9 +65,13 @@ the upstream pack is also installed.
 Clone next to your other projects and link it into ComfyUI:
 
 ```
-git clone <your-remote> N:\AI\ComfyUI-pixelscience-nodes
+git clone https://github.com/smbell1979/ComfyUI-pixelscience-nodes.git N:\AI\ComfyUI-pixelscience-nodes
 cmd /c mklink /J "N:\AI\ComfyUI\custom_nodes\ComfyUI-pixelscience-nodes" "N:\AI\ComfyUI-pixelscience-nodes"
 ```
+
+The junction lets the repo live with your other projects while ComfyUI still
+finds it under `custom_nodes`. The folder name matters (ComfyUI imports it as a
+module), the remote's repo name does not.
 
 Requires `imageio-ffmpeg` (bundled ffmpeg), `Pillow`, and `lameenc` for MP3
 output. Restart ComfyUI fully after any change — custom node Python is imported
