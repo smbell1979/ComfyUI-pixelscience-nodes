@@ -6,21 +6,25 @@ extended from there.
 
 ## Nodes
 
-| Node | Class key | Purpose |
-|---|---|---|
-| Save Video | `SaveVideoDehypnotic` | ffmpeg-based video writer, optional audio mux |
-| Save Images | `SaveImagesDehypnotic` | image writer |
-| Save Audio | `SaveAudioMP3Dehypnotic` | MP3 writer |
-| FrameSave | `FrameSaveDehypnotic` | frame exporter |
-| Load Video | `LoadVideoDehypnotic` | video loader |
-| AspectRatio | `dehypnotic_AspectRatio` | aspect ratio calculator |
+| Node | Class key | Was (upstream) | Purpose |
+|---|---|---|---|
+| Save Video | `pixelscience_SaveVideo` | `SaveVideoDehypnotic` | ffmpeg-based video writer, optional audio mux |
+| Save Images | `pixelscience_SaveImages` | `SaveImagesDehypnotic` | image writer |
+| Save Audio | `pixelscience_SaveAudioMP3` | `SaveAudioMP3Dehypnotic` | MP3 writer |
+| FrameSave | `pixelscience_FrameSave` | `FrameSaveDehypnotic` | frame exporter |
+| Load Video | `pixelscience_LoadVideo` | `LoadVideoDehypnotic` | video loader |
+| AspectRatio | `pixelscience_AspectRatio` | `dehypnotic_AspectRatio` | aspect ratio calculator |
 
-The class keys intentionally match upstream so existing workflows keep loading.
-**Do not rename them** — they are stored inside every saved workflow JSON.
-Display names are cosmetic and safe to change.
+Class keys are stored inside every saved workflow JSON, so **renaming one breaks
+every workflow using it**. The rename above was paired with a migration pass over
+the workflow files. Display names are cosmetic and safe to change freely.
 
-Because the keys are shared, this pack and the original ComfyUI-Dehypnotic
-cannot be installed at the same time; whichever loads last silently wins.
+Because the keys no longer collide with upstream, this pack and the original
+ComfyUI-Dehypnotic can be installed side by side.
+
+Anything saved *before* the rename — a PNG or video carrying an embedded
+workflow — still references the old keys and will show as a missing node unless
+the upstream pack is also installed.
 
 ## Changes from upstream
 
@@ -72,7 +76,7 @@ once at startup.
 ## Save paths
 
 The save nodes write inside `ComfyUI/output` by default. To allow other
-locations, put `dehypnotic_save_allowed_paths.json` in `<ComfyUI>/user/config/`:
+locations, put `pixelscience_save_allowed_paths.json` in `<ComfyUI>/user/config/`:
 
 ```json
 { "allowed_roots": ["D:/VideoExports"] }

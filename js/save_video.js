@@ -2,19 +2,19 @@ import { app } from "../../scripts/app.js";
 import { api } from "../../scripts/api.js";
 import { applyAdaptiveCanvasOnly, installCanvasZoomPassthrough, installResizeFloor, measureRootContent } from "./shared/index.mjs";
 
-// --- Dehypnotic Save Video: Properties + Video Preview Extension -------------
+// --- pixelscience Save Video: Properties + Video Preview Extension -------------
 // 1. Moves number_padding and number_start to the Properties panel.
 // 2. Adds a looping video preview widget at the bottom of the node.
 
-const EXTENSION_NAME = "Dehypnotic.SaveVideo";
-const NODE_TYPE = "SaveVideoDehypnotic";
+const EXTENSION_NAME = "pixelscience.SaveVideo";
+const NODE_TYPE = "pixelscience_SaveVideo";
 const PROPERTY_WIDGETS = ["number_padding", "number_start", "loop_still_to_audio", "show_progress"];
 
 const SETTING_IDS = {
-  number_padding: "Dehypnotic.SaveVideo.NumberPadding",
-  number_start: "Dehypnotic.SaveVideo.NumberStart",
-  loop_still_to_audio: "Dehypnotic.SaveVideo.LoopStillToAudio",
-  show_progress: "Dehypnotic.SaveVideo.ShowProgress",
+  number_padding: "pixelscience.SaveVideo.NumberPadding",
+  number_start: "pixelscience.SaveVideo.NumberStart",
+  loop_still_to_audio: "pixelscience.SaveVideo.LoopStillToAudio",
+  show_progress: "pixelscience.SaveVideo.ShowProgress",
 };
 
 // ---- helpers ----------------------------------------------------------------
@@ -100,7 +100,7 @@ app.registerExtension({
       defaultValue: 4,
       attrs: { min: 1, max: 10, step: 1 },
       tooltip: "Default sequence number digit padding (0001, 0002, ...) for Save Video.",
-      category: ["🧘 Dehypnotic", "Save Video", "Number Padding"],
+      category: ["pixelscience", "Save Video", "Number Padding"],
       onChange: (val) => syncSettingToNodes("number_padding", val),
     },
     {
@@ -110,7 +110,7 @@ app.registerExtension({
       defaultValue: 1,
       attrs: { min: 0, max: 1000000, step: 1 },
       tooltip: "Default starting sequence number for Save Video.",
-      category: ["🧘 Dehypnotic", "Save Video", "Number Start"],
+      category: ["pixelscience", "Save Video", "Number Start"],
       onChange: (val) => syncSettingToNodes("number_start", val),
     },
     {
@@ -119,7 +119,7 @@ app.registerExtension({
       type: "boolean",
       defaultValue: false,
       tooltip: "If only one frame plus audio, loop the frame to match audio duration.",
-      category: ["🧘 Dehypnotic", "Save Video", "Loop Still to Audio"],
+      category: ["pixelscience", "Save Video", "Loop Still to Audio"],
       onChange: (val) => syncSettingToNodes("loop_still_to_audio", val),
     },
     {
@@ -128,7 +128,7 @@ app.registerExtension({
       type: "boolean",
       defaultValue: true,
       tooltip: "Show rendering progress in console for Save Video.",
-      category: ["🧘 Dehypnotic", "Save Video", "Show Progress"],
+      category: ["pixelscience", "Save Video", "Show Progress"],
       onChange: (val) => syncSettingToNodes("show_progress", val),
     },
   ],

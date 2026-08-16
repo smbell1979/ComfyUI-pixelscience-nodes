@@ -1,11 +1,11 @@
 import { app } from "../../scripts/app.js";
 import { applyAdaptiveCanvasOnly, installCanvasZoomPassthrough, installResizeFloor, measureRootContent } from "./shared/index.mjs";
 
-// ─── Dehypnotic Save Images: Thumbnail Gallery Extension ────────────────────
+// ─── pixelscience Save Images: Thumbnail Gallery Extension ────────────────────
 // DOM-based thumbnail preview widget with responsive scaling and Pixaroma architecture compliance.
 
-const EXTENSION_NAME = "Dehypnotic.SaveImages.Gallery";
-const NODE_TYPE = "SaveImagesDehypnotic";
+const EXTENSION_NAME = "pixelscience.SaveImages.Gallery";
+const NODE_TYPE = "pixelscience_SaveImages";
 
 // ── Layout constants ────────────────────────────────────────────────────────
 const MIN_W = 300;
@@ -73,9 +73,9 @@ function showImageOverlay(src) {
 const PROPERTY_WIDGETS = ["number_padding", "number_start", "dpi"];
 
 const SETTING_IDS = {
-  number_padding: "Dehypnotic.SaveImages.NumberPadding",
-  number_start: "Dehypnotic.SaveImages.NumberStart",
-  dpi: "Dehypnotic.SaveImages.DPI",
+  number_padding: "pixelscience.SaveImages.NumberPadding",
+  number_start: "pixelscience.SaveImages.NumberStart",
+  dpi: "pixelscience.SaveImages.DPI",
 };
 
 function getSettingValue(propName, fallbackDefault) {
@@ -145,7 +145,7 @@ app.registerExtension({
       defaultValue: 4,
       attrs: { min: 1, max: 10, step: 1 },
       tooltip: "Default sequence number digit padding (0001, 0002, ...) for Save Images.",
-      category: ["🧘 Dehypnotic", "Save Images", "Number Padding"],
+      category: ["pixelscience", "Save Images", "Number Padding"],
       onChange: (val) => syncSettingToNodes("number_padding", val),
     },
     {
@@ -155,7 +155,7 @@ app.registerExtension({
       defaultValue: 1,
       attrs: { min: 0, max: 1000000, step: 1 },
       tooltip: "Default starting sequence number for Save Images.",
-      category: ["🧘 Dehypnotic", "Save Images", "Number Start"],
+      category: ["pixelscience", "Save Images", "Number Start"],
       onChange: (val) => syncSettingToNodes("number_start", val),
     },
     {
@@ -165,7 +165,7 @@ app.registerExtension({
       defaultValue: 300,
       attrs: { min: 1, max: 1200, step: 1 },
       tooltip: "Default DPI (dots per inch) for Save Images.",
-      category: ["🧘 Dehypnotic", "Save Images", "DPI"],
+      category: ["pixelscience", "Save Images", "DPI"],
       onChange: (val) => syncSettingToNodes("dpi", val),
     },
   ],

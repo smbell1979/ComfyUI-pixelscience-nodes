@@ -1,13 +1,13 @@
 import { app } from "../../scripts/app.js";
 import { applyAdaptiveCanvasOnly, installCanvasZoomPassthrough, installResizeFloor } from "./shared/index.mjs";
 
-// ─── Dehypnotic FrameSave Extension ─────────────────────────────────────────
+// ─── pixelscience FrameSave Extension ─────────────────────────────────────────
 // Interactive frame selection, start/end frame filtering, frame step interval,
 // custom +/- steppers, live total frame detection, responsive scaling gallery,
 // size slider (50px - 250px), mint-green (#34d399) selection borders.
 
-const EXTENSION_NAME = "Dehypnotic.FrameSave";
-const NODE_TYPE = "FrameSaveDehypnotic";
+const EXTENSION_NAME = "pixelscience.FrameSave";
+const NODE_TYPE = "pixelscience_FrameSave";
 const DEFAULT_THUMB_HEIGHT = 100;
 const MINT_GREEN = "#34d399";
 const MIN_W = 580;
@@ -393,7 +393,7 @@ function showFolderBrowserModal(initialPath, onSelect) {
   const loadDirectory = async (targetPath) => {
     folderList.innerHTML = "<div style='color: #666; font-size: 11px; padding: 12px;'>Loading folders...</div>";
     try {
-      const resp = await fetch("/dehypnotic/frame_save/list_dirs", {
+      const resp = await fetch("/pixelscience/frame_save/list_dirs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ path: targetPath || "" }),
@@ -708,7 +708,7 @@ app.registerExtension({
       e.stopPropagation();
       pickerBtn.disabled = true;
       try {
-        const resp = await fetch("/dehypnotic/frame_save/browse_folder", {
+        const resp = await fetch("/pixelscience/frame_save/browse_folder", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ current_path: pathInput.value.trim() }),
@@ -787,7 +787,7 @@ app.registerExtension({
       saveBtn.textContent = "SAVING...";
 
       try {
-        const resp = await fetch("/dehypnotic/frame_save/save", {
+        const resp = await fetch("/pixelscience/frame_save/save", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -927,7 +927,7 @@ app.registerExtension({
           }
           lastQueriedFilename = info.filename;
           try {
-            const resp = await fetch("/dehypnotic/frame_save/get_media_info", {
+            const resp = await fetch("/pixelscience/frame_save/get_media_info", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ filename: info.filename }),
@@ -1198,7 +1198,7 @@ app.registerExtension({
         const img = document.createElement("img");
         const params = new URLSearchParams({
           filename: info.filename,
-          subfolder: info.subfolder || "dehypnotic_frame_save",
+          subfolder: info.subfolder || "pixelscience_frame_save",
           type: info.type || "temp",
           t: String(Date.now()),
         });

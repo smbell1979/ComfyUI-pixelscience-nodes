@@ -3,8 +3,8 @@ import { app } from "/scripts/app.js";
 // Shared "is a workflow currently loading?" guard.
 let _loading = false;
 
-if (app && app.loadGraphData && !app._dehypnoticGraphLoadWrapped) {
-  app._dehypnoticGraphLoadWrapped = true;
+if (app && app.loadGraphData && !app._pixelscienceGraphLoadWrapped) {
+  app._pixelscienceGraphLoadWrapped = true;
   const _origLoadGraphData = app.loadGraphData.bind(app);
   app.loadGraphData = function (...args) {
     _loading = true;

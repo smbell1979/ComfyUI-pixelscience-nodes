@@ -609,7 +609,7 @@ class SaveVideo:
     """
     DESCRIPTION = (
     "Saves to ComfyUI/output by default. To allow external locations, create a file named "
-	" dehypnotic_save_allowed_paths.json containing for example: { \"allowed_roots\": [\"D:/ImageExports\", \"E:/TeamShare/Images\"] }. "
+	" pixelscience_save_allowed_paths.json containing for example: { \"allowed_roots\": [\"D:/ImageExports\", \"E:/TeamShare/Images\"] }. "
 	"Place it in <ComfyUI>/user/config/. Read the Github repository for more info. I have placed the settings number_paddings, number_start, "
     "loop_still_to_audio, and show_progress in properties (right click) and ComfyUI settings to keep the node compact. "
     "file_path and filename_prefix accept [date_subfolder], which expands to the same rendered value as date_subfolder_pattern."
@@ -649,7 +649,7 @@ class SaveVideo:
     RETURN_TYPES = ("IMAGE", "STRING",)
     RETURN_NAMES = ("images", "video_path",)
     FUNCTION = "save"
-    CATEGORY = "Dehypnotic/💾 IO"
+    CATEGORY = "pixelscience/💾 IO"
     OUTPUT_NODE = True
 
     # ----------------------- path helpers -----------------------
@@ -670,13 +670,13 @@ class SaveVideo:
         return self._normalize_path(base.parent)
 
     def _load_allowed_roots(self) -> List[Path]:
-        env_cfg = os.environ.get("DEHYPNOTIC_SAVE_ALLOWED_PATHS")
+        env_cfg = os.environ.get("PIXELSCIENCE_SAVE_ALLOWED_PATHS")
         candidates: List[str] = []
         if env_cfg:
             candidates.append(env_cfg)
 
         comfy_root = self._comfy_root()
-        names = ("dehypnotic_save_allowed_paths.json", "allowed_paths.json")
+        names = ("pixelscience_save_allowed_paths.json", "allowed_paths.json")
         for name in names:
             candidates.append(str(comfy_root / "user" / "config" / name))
             candidates.append(str(comfy_root / "user" / name))
@@ -752,10 +752,10 @@ class SaveVideo:
             "This node only writes inside ComfyUI's output directory, "
             "unless the path is whitelisted offline.\n\n"
             "To allow external locations, create/edit a JSON file named "
-            "'dehypnotic_save_allowed_paths.json' in your ComfyUI root (or user/config) folder "
+            "'pixelscience_save_allowed_paths.json' in your ComfyUI root (or user/config) folder "
             "with content like:\n\n"
             '{\n  "allowed_roots": ["D:/VideoExports", "E:/TeamShare/Video"]\n}\n\n'
-            "You can also set the DEHYPNOTIC_SAVE_ALLOWED_PATHS environment variable to point to this file."
+            "You can also set the PIXELSCIENCE_SAVE_ALLOWED_PATHS environment variable to point to this file."
         )
         raise PermissionError(msg)
 

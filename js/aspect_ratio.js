@@ -2191,7 +2191,7 @@ api.addEventListener("aspect_ratio.update_dims", (e) => {
   };
 
   const node = visit(app.graph);
-  if (node && (node.comfyClass === "dehypnotic_AspectRatio" || node.comfyClass === "AspectRatioAdvanced" || node.type === "dehypnotic_AspectRatio" || node.type === "AspectRatioAdvanced")) {
+  if (node && (node.comfyClass === "pixelscience_AspectRatio" || node.comfyClass === "AspectRatioAdvanced" || node.type === "pixelscience_AspectRatio" || node.type === "AspectRatioAdvanced")) {
     node._pythonDims = { w: width, h: height };
     const state = readState(node);
     state.width = width;
@@ -2209,7 +2209,7 @@ function buildNodeIndex() {
     const nodes = graph._nodes || graph.nodes || [];
     for (const n of nodes) {
       if (!n) continue;
-      if (n.comfyClass === "dehypnotic_AspectRatio" || n.comfyClass === "AspectRatioAdvanced" || n.type === "dehypnotic_AspectRatio" || n.type === "AspectRatioAdvanced") {
+      if (n.comfyClass === "pixelscience_AspectRatio" || n.comfyClass === "AspectRatioAdvanced" || n.type === "pixelscience_AspectRatio" || n.type === "AspectRatioAdvanced") {
         index.set(String(n.id), n);
       }
       const inner = n.subgraph || n.graph || n._graph;
@@ -2237,7 +2237,7 @@ app.graphToPrompt = async function (...args) {
     let index = null;
     for (const id in out) {
       const entry = out[id];
-      if (!entry || (entry.class_type !== "dehypnotic_AspectRatio" && entry.class_type !== "AspectRatioAdvanced")) continue;
+      if (!entry || (entry.class_type !== "pixelscience_AspectRatio" && entry.class_type !== "AspectRatioAdvanced")) continue;
       if (!index) index = buildNodeIndex();
       const node = findNode(index, id);
       const state = node ? JSON.stringify(readState(node)) : JSON.stringify(DEFAULT_STATE);
@@ -2252,7 +2252,7 @@ app.registerExtension({
   name: "AspectRatio.Extension",
 
   beforeRegisterNodeDef(nodeType, nodeData) {
-    if (nodeData.name !== "dehypnotic_AspectRatio" && nodeData.name !== "AspectRatioAdvanced") return;
+    if (nodeData.name !== "pixelscience_AspectRatio" && nodeData.name !== "AspectRatioAdvanced") return;
 
     // Aktiver manuell justering på selve node-prototypen
     nodeType.prototype.resizable = true;
@@ -2348,7 +2348,7 @@ app.registerExtension({
 
 
   nodeCreated(node) {
-    if (node.comfyClass !== "dehypnotic_AspectRatio" && node.comfyClass !== "AspectRatioAdvanced") return
+    if (node.comfyClass !== "pixelscience_AspectRatio" && node.comfyClass !== "AspectRatioAdvanced") return
     setupNode(node);
   },
 });

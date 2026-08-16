@@ -84,7 +84,7 @@ class SaveImages:
 	"""Lagrer bilder til disk i flere formater med sekvensiell navngiving."""
 	DESCRIPTION = (
     "Saves to ComfyUI/output by default. To allow external locations, create a file named "
-	" dehypnotic_save_allowed_paths.json containing for example: { \"allowed_roots\": [\"D:/ImageExports\", \"E:/TeamShare/Images\"] }. "
+	" pixelscience_save_allowed_paths.json containing for example: { \"allowed_roots\": [\"D:/ImageExports\", \"E:/TeamShare/Images\"] }. "
 	"Place it in <ComfyUI>/user/config/. Read the Github repository for more info. I have placed the settings number_paddings, number_start, "
 	"and DPI in properties (rigkt click) and ComfyUI settings to keep the node compact."
     )
@@ -113,7 +113,7 @@ class SaveImages:
 	RETURN_NAMES = ("images", "saved_path")
 	FUNCTION = "save"
 	OUTPUT_NODE = True
-	CATEGORY = "Dehypnotic/💾 IO"
+	CATEGORY = "pixelscience/💾 IO"
 
 	def _save_single_image(
 		self,
@@ -206,14 +206,14 @@ class SaveImages:
 		return os.path.join(base_output, path)
 
 	def _load_allowed_roots(self) -> _t.List[str]:
-		env_cfg = os.environ.get("DEHYPNOTIC_SAVE_ALLOWED_PATHS")
+		env_cfg = os.environ.get("PIXELSCIENCE_SAVE_ALLOWED_PATHS")
 		candidates: List[str] = []
 		if env_cfg and os.path.isfile(env_cfg):
 			candidates.append(env_cfg)
 
 		comfy_root = self._get_comfy_root()
 		names = (
-			"dehypnotic_save_allowed_paths.json",
+			"pixelscience_save_allowed_paths.json",
 			"allowed_paths.json",
 		)
 		for name in names:
@@ -266,10 +266,10 @@ class SaveImages:
 			"This node only writes inside ComfyUI's output directory, "
 			"unless the path is whitelisted offline.\n\n"
 			"To allow external locations, create/edit a JSON file named "
-			"'dehypnotic_save_allowed_paths.json' in your ComfyUI root (or user/config) folder "
+			"'pixelscience_save_allowed_paths.json' in your ComfyUI root (or user/config) folder "
 			"with content like:\n\n"
 			'{\n  "allowed_roots": ["D:/ImageExports", "E:/TeamShare/Output"]\n}\n\n'
-			"You can also set the DEHYPNOTIC_SAVE_ALLOWED_PATHS environment variable to point to this file."
+			"You can also set the PIXELSCIENCE_SAVE_ALLOWED_PATHS environment variable to point to this file."
 		)
 		raise PermissionError(msg)
 
@@ -406,7 +406,7 @@ class SaveImages:
 					thumb = pil_img.copy()
 					thumb.thumbnail((256, 256), Image.LANCZOS)
 					thumb_rgb = thumb.convert("RGB") if thumb.mode != "RGB" else thumb
-					thumb_name = f"dehypnotic_thumb_{uuid.uuid4().hex[:12]}.jpg"
+					thumb_name = f"pixelscience_thumb_{uuid.uuid4().hex[:12]}.jpg"
 					thumb_path = os.path.join(temp_dir, thumb_name)
 					thumb_rgb.save(thumb_path, format="JPEG", quality=60, optimize=True)
 					ui_images.append({

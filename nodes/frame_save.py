@@ -1,9 +1,9 @@
 # frame_save.py
-# ComfyUI custom node: FrameSave (Dehypnotic)
+# ComfyUI custom node: FrameSave (pixelscience)
 #
 # - Accepts a sequence of images (input: images)
 # - Filters frames between start_frame and end_frame (inclusive, 1-indexed) with step interval
-# - Empties and saves filtered images temporarily to temp directory 'dehypnotic_frame_save'
+# - Empties and saves filtered images temporarily to temp directory 'pixelscience_frame_save'
 # - Fast PNG saving without blocking optimize pass
 # - Provides HTTP POST endpoints for media info inspection, folder directory navigation & native OS folder picker
 # - Provides HTTP POST endpoint to save selected frames to target path with whitelist validation
@@ -209,14 +209,14 @@ class PathValidator:
 
 	@classmethod
 	def _load_allowed_roots(cls) -> _t.List[str]:
-		env_cfg = os.environ.get("DEHYPNOTIC_SAVE_ALLOWED_PATHS")
+		env_cfg = os.environ.get("PIXELSCIENCE_SAVE_ALLOWED_PATHS")
 		candidates: List[str] = []
 		if env_cfg and os.path.isfile(env_cfg):
 			candidates.append(env_cfg)
 
 		comfy_root = cls._get_comfy_root()
 		names = (
-			"dehypnotic_save_allowed_paths.json",
+			"pixelscience_save_allowed_paths.json",
 			"allowed_paths.json",
 		)
 		for name in names:
@@ -272,7 +272,7 @@ class PathValidator:
 		msg = (
 			f"Invalid save location: '{path_to_validate}'. "
 			"This node only allows saving inside ComfyUI's output directory, "
-			"unless authorized in 'dehypnotic_save_allowed_paths.json'."
+			"unless authorized in 'pixelscience_save_allowed_paths.json'."
 		)
 		raise PermissionError(msg)
 
@@ -281,11 +281,11 @@ class PathValidator:
 # Server API Registration
 # -----------------------------------------------------------------------------#
 
-TEMP_SUBFOLDER = "dehypnotic_frame_save"
+TEMP_SUBFOLDER = "pixelscience_frame_save"
 
 if PromptServer is not None:
 
-	@PromptServer.instance.routes.post("/dehypnotic/frame_save/get_media_info")
+	@PromptServer.instance.routes.post("/pixelscience/frame_save/get_media_info")
 	async def handle_get_media_info_request(request):
 		try:
 			data = await request.json()
@@ -338,7 +338,7 @@ if PromptServer is not None:
 		except Exception as e:
 			return web.json_response({"success": False, "error": str(e)}, status=500)
 
-	@PromptServer.instance.routes.post("/dehypnotic/frame_save/list_dirs")
+	@PromptServer.instance.routes.post("/pixelscience/frame_save/list_dirs")
 	async def handle_list_dirs_request(request):
 		try:
 			data = await request.json()
@@ -348,7 +348,7 @@ if PromptServer is not None:
 		except Exception as e:
 			return web.json_response({"success": False, "error": str(e)}, status=500)
 
-	@PromptServer.instance.routes.post("/dehypnotic/frame_save/browse_folder")
+	@PromptServer.instance.routes.post("/pixelscience/frame_save/browse_folder")
 	async def handle_browse_folder_request(request):
 		try:
 			data = await request.json()
@@ -361,7 +361,7 @@ if PromptServer is not None:
 		except Exception as e:
 			return web.json_response({"success": False, "error": str(e)}, status=500)
 
-	@PromptServer.instance.routes.post("/dehypnotic/frame_save/save")
+	@PromptServer.instance.routes.post("/pixelscience/frame_save/save")
 	async def handle_frame_save_request(request):
 		try:
 			data = await request.json()
@@ -425,7 +425,7 @@ class FrameSave:
 
 	DESCRIPTION = (
 		"Saves to ComfyUI/output by default. "
-		"To allow external locations, create a file named dehypnotic_save_allowed_paths.json containing for example: "
+		"To allow external locations, create a file named pixelscience_save_allowed_paths.json containing for example: "
 		"{ \"allowed_roots\": [\"D:/ImageExports\", \"E:/TeamShare/Images\"] }. Place it in <ComfyUI>/user/config/. "
 		"Read the Github repository for more info."
 	)
@@ -448,7 +448,7 @@ class FrameSave:
 	RETURN_NAMES = ()
 	FUNCTION = "save"
 	OUTPUT_NODE = True
-	CATEGORY = "Dehypnotic/💾 IO"
+	CATEGORY = "pixelscience/💾 IO"
 
 	def save(
 		self,

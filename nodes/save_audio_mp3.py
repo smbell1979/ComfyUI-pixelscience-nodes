@@ -1,4 +1,4 @@
-# save_audio_multi.py  (SaveAudioMP3Dehypnotic – multi-format edition)
+# save_audio_multi.py  (pixelscience_SaveAudioMP3 – multi-format edition)
 import io
 import os
 import time
@@ -531,8 +531,8 @@ class SaveAudioMP3:
 
     DESCRIPTION = (
     "Saves to ComfyUI/output by default. To allow external locations, create a file named "
-	" dehypnotic_save_allowed_paths.json containing for example: { \"allowed_roots\": [\"D:/AudioExports\", \"E:/TeamShare/Audio\"] }. "
-	"Place it in <ComfyUI>/user/config/. Read the Github repository at https://github.com/Dehypnotic/ComfyUI-Dehypnotic for more info."
+	" pixelscience_save_allowed_paths.json containing for example: { \"allowed_roots\": [\"D:/AudioExports\", \"E:/TeamShare/Audio\"] }. "
+	"Place it in <ComfyUI>/user/config/. See the project README for more info."
     )
 
     @classmethod
@@ -576,7 +576,7 @@ class SaveAudioMP3:
     RETURN_TYPES  = ("AUDIO", "STRING")
     RETURN_NAMES  = ("audio", "format_info")
     FUNCTION      = "save"
-    CATEGORY      = "Dehypnotic/💾 IO"
+    CATEGORY      = "pixelscience/💾 IO"
     OUTPUT_NODE   = True
 
     # ──────────────────────── path helpers (unchanged) ───────────────────────
@@ -598,13 +598,13 @@ class SaveAudioMP3:
         return os.path.abspath(os.path.join(base, os.pardir))
 
     def _load_allowed_roots(self) -> _t.List[str]:
-        env_cfg = os.environ.get("DEHYPNOTIC_SAVE_ALLOWED_PATHS")
+        env_cfg = os.environ.get("PIXELSCIENCE_SAVE_ALLOWED_PATHS")
         candidates = []
         if env_cfg:
             candidates.append(env_cfg)
         comfy_root = self._comfy_root()
         global_names = (
-            "dehypnotic_save_allowed_paths.json",
+            "pixelscience_save_allowed_paths.json",
             "allowed_paths.json",
         )
         for name in global_names:
@@ -663,10 +663,10 @@ class SaveAudioMP3:
             "This node only writes inside ComfyUI's output directory, "
             "unless the path is whitelisted offline.\n\n"
             "To allow external locations, create/edit a JSON file named "
-            "'dehypnotic_save_allowed_paths.json' in your ComfyUI root (or user/config) folder "
+            "'pixelscience_save_allowed_paths.json' in your ComfyUI root (or user/config) folder "
             "with content like:\n\n"
             '{\n  "allowed_roots": ["D:/AudioExports", "E:/TeamShare/Audio"]\n}\n\n'
-            "You can also set the DEHYPNOTIC_SAVE_ALLOWED_PATHS environment variable to point to this file."
+            "You can also set the PIXELSCIENCE_SAVE_ALLOWED_PATHS environment variable to point to this file."
         )
         raise PermissionError(msg)
 
@@ -813,7 +813,7 @@ class SaveAudioMP3:
                 raise ValueError(f"Ukjent format: {fmt!r}. Støttede formater: mp3, wav, flac, opus.")
 
         # ── Temp preview copy (fixed filename, always overwritten) ────────────
-        _PREVIEW_FILENAME = f"dehypnotic_preview_audio{ext}"
+        _PREVIEW_FILENAME = f"pixelscience_preview_audio{ext}"
         try:
             import folder_paths as _fp  # type: ignore
             temp_dir = _fp.get_temp_directory()

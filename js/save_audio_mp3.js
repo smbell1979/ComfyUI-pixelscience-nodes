@@ -1,14 +1,14 @@
 import { app } from "../../scripts/app.js";
 import { applyAdaptiveCanvasOnly, installCanvasZoomPassthrough, installResizeFloor, measureRootContent } from "./shared/index.mjs";
 
-// ─── Dehypnotic SaveAudio: Dynamic widgets + Inline Audio Player ──────────────
+// ─── pixelscience SaveAudio: Dynamic widgets + Inline Audio Player ──────────────
 // 1. Removes/restores format-specific widgets from node.widgets based on the
 //    "format" dropdown. Removing them is the only reliable way to prevent
 //    LiteGraph from drawing them (type="hidden" stops interaction but not drawing).
 // 2. Shows an inline audio player that auto-plays the last rendered preview.
 
-const EXTENSION_NAME = "Dehypnotic.SaveAudio.Player";
-const NODE_TYPE      = "SaveAudioMP3Dehypnotic";
+const EXTENSION_NAME = "pixelscience.SaveAudio.Player";
+const NODE_TYPE      = "pixelscience_SaveAudioMP3";
 
 // ── Format widget maps ────────────────────────────────────────────────────────
 

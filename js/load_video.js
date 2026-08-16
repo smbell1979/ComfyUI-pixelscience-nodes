@@ -2,8 +2,8 @@ import { app } from "../../scripts/app.js";
 import { api } from "../../scripts/api.js";
 import { applyAdaptiveCanvasOnly, installCanvasZoomPassthrough, installResizeFloor, measureRootContent } from "./shared/index.mjs";
 
-const EXTENSION_NAME = "Dehypnotic.LoadVideo";
-const NODE_TYPE = "LoadVideoDehypnotic";
+const EXTENSION_NAME = "pixelscience.LoadVideo";
+const NODE_TYPE = "pixelscience_LoadVideo";
 
 function fitHeight(node) {
   node.setSize([node.size[0], node.computeSize([node.size[0], node.size[1]])[1]]);

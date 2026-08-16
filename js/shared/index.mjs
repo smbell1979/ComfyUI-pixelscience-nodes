@@ -75,5 +75,5 @@ export function getNodeHelp(comfyClass) {
 
 export { installResizeFloor, measureRootContent } from "./resize_floor.mjs";
 
-export const PIXAROMA_JS_VERSION = "1.0.0-dehypnotic";
+export const PIXAROMA_JS_VERSION = "1.0.0-pixelscience";
 
