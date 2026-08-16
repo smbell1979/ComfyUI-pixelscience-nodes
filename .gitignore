@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local save-path whitelist; the committed file is an empty template.
+# Uncomment if you want to keep your real roots out of the repo.
+# dehypnotic_save_allowed_paths.json
