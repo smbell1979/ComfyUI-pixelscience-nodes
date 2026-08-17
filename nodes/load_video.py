@@ -96,7 +96,11 @@ class LoadVideo:
             if res.returncode == 0 and res.stdout:
                 audio_data = np.frombuffer(res.stdout, dtype=np.float32)
                 if len(audio_data) > 0:
-                    audio_data = audio_data.reshape(-1, 2).T 
+                    # .copy() is required: frombuffer wraps immutable bytes, so the
+                    # array is read-only and torch.from_numpy would share that memory.
+                    # Any in-place op downstream would then be undefined behavior.
+                    # It also restores contiguity, which .T breaks.
+                    audio_data = audio_data.reshape(-1, 2).T.copy()
                     audio_tensor = torch.from_numpy(audio_data).unsqueeze(0) # [1, channels, samples]
         except Exception as e:
             print(f"[LoadVideo] Audio extraction failed: {e}")
