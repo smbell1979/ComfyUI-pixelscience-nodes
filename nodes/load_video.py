@@ -11,6 +11,14 @@ try:
 except Exception:
     ffmpeg_exe = "ffmpeg"
 
+try:
+    # Same VIDEO object the built-in LoadVideo emits: a lazy handle to the file
+    # that keeps audio, frame rate and container metadata intact.
+    from comfy_api.latest import InputImpl as _InputImpl
+except Exception as _exc:
+    _InputImpl = None
+    _VIDEO_IMPORT_ERROR = _exc
+
 class LoadVideo:
     @classmethod
     def INPUT_TYPES(cls):
@@ -32,8 +40,10 @@ class LoadVideo:
             }
         }
 
-    RETURN_TYPES = ("IMAGE", "AUDIO", "FLOAT")
-    RETURN_NAMES = ("images", "audio", "fps")
+    # 'video' is appended last on purpose: output links are positional, so
+    # inserting it earlier would silently rewire existing workflows.
+    RETURN_TYPES = ("IMAGE", "AUDIO", "FLOAT", "VIDEO")
+    RETURN_NAMES = ("images", "audio", "fps", "video")
     FUNCTION = "load_video"
     CATEGORY = "pixelscience/💾 IO"
 
@@ -93,4 +103,16 @@ class LoadVideo:
 
         audio_out = {"waveform": audio_tensor, "sample_rate": sample_rate} if audio_tensor is not None else None
 
-        return (images_tensor, audio_out, float(fps))
+        # Lazy handle to the source file. Unlike the decoded 'images' output this
+        # costs nothing to build and preserves the original streams, so a Save
+        # Video node downstream can copy them instead of re-encoding.
+        video_out = None
+        if _InputImpl is not None:
+            try:
+                video_out = _InputImpl.VideoFromFile(video_path)
+            except Exception as exc:
+                print(f"[LoadVideo] Could not build VIDEO output: {exc}")
+        else:
+            print(f"[LoadVideo] VIDEO output unavailable, comfy_api import failed: {_VIDEO_IMPORT_ERROR}")
+
+        return (images_tensor, audio_out, float(fps), video_out)

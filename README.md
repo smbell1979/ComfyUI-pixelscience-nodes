@@ -60,6 +60,23 @@ the upstream pack is also installed.
   [SaveVideo] Encoding [########--------]  50.0% 250/500 12.5fps eta 00:20
   ```
 
+### Load Video
+
+- **Added a `video` output** (`VIDEO`), alongside the existing `images`, `audio`
+  and `fps`. This is the same lazy `VideoFromFile` handle the built-in Load Video
+  node emits.
+
+  The distinction matters: `images` is decoded pixels, eager and roughly
+  `frames × H × W × 3 × 4` bytes in memory, and it discards audio, frame rate and
+  container metadata. `video` costs nothing to construct and keeps the original
+  streams, so a Save Video node downstream can copy them rather than re-encode —
+  no generation loss.
+
+  Appended last, since output links are positional and inserting it earlier would
+  silently rewire existing workflows. The node still decodes every frame for the
+  `images` output regardless of which outputs you connect, so wiring only `video`
+  does not skip the decode cost.
+
 ## Install
 
 Clone next to your other projects and link it into ComfyUI:
